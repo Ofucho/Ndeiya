@@ -6,17 +6,17 @@ app = Flask(__name__)
 @app.route('/',methods=['POST','GET'])
 def search():
 
-    return render_template('search.html')
+    return render_template('index1.html')
 
-@app.route('/nguirubi_thigio', methods=['POST','GET'])
-def nguirubi_thigio():
+@app.route('/ndeiya', methods=['POST','GET'])
+def ndeiya():
     #parcel_id = input("Please enter parcel number")
     if request.method == 'POST':
         parcel_id = request.form['parcel_id']
     else:
         return "The parcel number does not exist "
 
-    conn = psycopg2.connect(database="ndeiya_plots", user="postgres", password="1234", host="127.0.0.1", port="5432")
+    conn = psycopg2.connect(database="ndeiya", user="postgres", password="1234", host="127.0.0.1", port="5432")
 
     cur = conn.cursor()
 
@@ -26,7 +26,7 @@ def nguirubi_thigio():
         parcel_id = "'" + parcel_id + "'"
 
 
-    cur.execute("""SELECT * FROM nguirubi_thigio WHERE parcel_number = {}""".format(parcel_id))
+    cur.execute("""SELECT blocks.block_name, land_parcels.sheet_number, land_parcels.area_sq_m, land_parcels.parcel_number FROM land_parcels INNER JOIN blocks ON blocks.id = land_parcels.block_id WHERE parcel_number = {}""".format(parcel_id))
     query_results = cur.fetchall()
     #print(query_results)
 
@@ -41,81 +41,81 @@ def nguirubi_thigio():
 
     return render_template('index.html',parcel_id=parcel_id,query_results=query_results)
 
-@app.route('/nachu_ndacha', methods=['POST','GET'])
-def nachu_ndacha():
-    #parcel_id = input("Please enter parcel number")
-    if request.method == 'POST':
-        parcel_id = request.form['parcel_id']
-    else:
-        return "The parcel number does not exist "
-
-    conn = psycopg2.connect(database="ndeiya_plots", user="postgres", password="1234", host="127.0.0.1", port="5432")
-
-    cur = conn.cursor()
-
-    if parcel_id[0] == '\'':
-        pass
-    else:
-        parcel_id = "'" + parcel_id + "'"
-
-
-    cur.execute("""SELECT * FROM nachu_ndacha WHERE parcel_number= {}""".format(parcel_id))
-    query_results = cur.fetchall()
-
-    conn.close()
-
-    return render_template('index.html',parcel_id=parcel_id,query_results=query_results)
-
-@app.route('/nachu_mikuyuini', methods=['POST','GET'])
-def nachu_mikuyuini():
-    #parcel_id = input("Please enter parcel number")
-    if request.method == 'POST':
-        parcel_id = request.form['parcel_id']
-    else:
-        return "The parcel number does not exist "
-
-    conn = psycopg2.connect(database="ndeiya_plots", user="postgres", password="1234", host="127.0.0.1", port="5432")
-
-    cur = conn.cursor()
-
-    if parcel_id[0] == '\'':
-        pass
-    else:
-        parcel_id = "'" + parcel_id + "'"
-
-
-    cur.execute("""SELECT * FROM nachu_mikuyuini WHERE parcel_number = {}""".format(parcel_id))
-    query_results = cur.fetchall()
-
-    conn.close()
-
-    return render_template('index.html',parcel_id=parcel_id,query_results=query_results)
-
-@app.route('/nguirubi_ndiuni', methods=['POST','GET'])
-def nguirubi_ndiuni():
-    #parcel_id = input("Please enter parcel number")
-    if request.method == 'POST':
-        parcel_id = request.form['parcel_id']
-    else:
-        return "The parcel number does not exist "
-
-    conn = psycopg2.connect(database="ndeiya_plots", user="postgres", password="1234", host="127.0.0.1", port="5432")
-
-    cur = conn.cursor()
-
-    if parcel_id[0] == '\'':
-        pass
-    else:
-        parcel_id = "'" + parcel_id + "'"
-
-
-    cur.execute("""SELECT * FROM nguirubi_ndiuni WHERE parcel_number = {}""".format(parcel_id))
-    query_results = cur.fetchall()
-
-    conn.close()
-
-    return render_template('index.html',parcel_id=parcel_id,query_results=query_results)
-
+# @app.route('/nachu_ndacha', methods=['POST','GET'])
+# def nachu_ndacha():
+#     #parcel_id = input("Please enter parcel number")
+#     if request.method == 'POST':
+#         parcel_id = request.form['parcel_id']
+#     else:
+#         return "The parcel number does not exist "
+#
+#     conn = psycopg2.connect(database="ndeiya_plots", user="postgres", password="1234", host="127.0.0.1", port="5432")
+#
+#     cur = conn.cursor()
+#
+#     if parcel_id[0] == '\'':
+#         pass
+#     else:
+#         parcel_id = "'" + parcel_id + "'"
+#
+#
+#     cur.execute("""SELECT * FROM nachu_ndacha WHERE parcel_number= {}""".format(parcel_id))
+#     query_results = cur.fetchall()
+#
+#     conn.close()
+#
+#     return render_template('index.html',parcel_id=parcel_id,query_results=query_results)
+#
+# @app.route('/nachu_mikuyuini', methods=['POST','GET'])
+# def nachu_mikuyuini():
+#     #parcel_id = input("Please enter parcel number")
+#     if request.method == 'POST':
+#         parcel_id = request.form['parcel_id']
+#     else:
+#         return "The parcel number does not exist "
+#
+#     conn = psycopg2.connect(database="ndeiya_plots", user="postgres", password="1234", host="127.0.0.1", port="5432")
+#
+#     cur = conn.cursor()
+#
+#     if parcel_id[0] == '\'':
+#         pass
+#     else:
+#         parcel_id = "'" + parcel_id + "'"
+#
+#
+#     cur.execute("""SELECT * FROM nachu_mikuyuini WHERE parcel_number = {}""".format(parcel_id))
+#     query_results = cur.fetchall()
+#
+#     conn.close()
+#
+#     return render_template('index.html',parcel_id=parcel_id,query_results=query_results)
+#
+# @app.route('/nguirubi_ndiuni', methods=['POST','GET'])
+# def nguirubi_ndiuni():
+#     #parcel_id = input("Please enter parcel number")
+#     if request.method == 'POST':
+#         parcel_id = request.form['parcel_id']
+#     else:
+#         return "The parcel number does not exist "
+#
+#     conn = psycopg2.connect(database="ndeiya_plots", user="postgres", password="1234", host="127.0.0.1", port="5432")
+#
+#     cur = conn.cursor()
+#
+#     if parcel_id[0] == '\'':
+#         pass
+#     else:
+#         parcel_id = "'" + parcel_id + "'"
+#
+#
+#     cur.execute("""SELECT * FROM nguirubi_ndiuni WHERE parcel_number = {}""".format(parcel_id))
+#     query_results = cur.fetchall()
+#
+#     conn.close()
+#
+#     return render_template('index.html',parcel_id=parcel_id,query_results=query_results)
+#
 
 
 if __name__ == '__main__':
